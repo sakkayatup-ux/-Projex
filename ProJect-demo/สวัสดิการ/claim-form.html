@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5. ยื่นคำขอสวัสดิการ</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../Data/data.js"></script>
+</head>
+<body>
+<div class="container">
+    <aside class="sidebar">
+        <div class="logo">ระบบข้อมูลพนักงาน<br>&nbsp;และสวัสดิการ</div>
+        <ul class="menu" id="mainMenu"></ul>
+    </aside>
+
+    <main class="main">
+        <header class="header">
+            <div class="logo-title">ยื่นคำขอสวัสดิการ</div>
+            <div class="header-right">
+                <button class="notif-btn">🔔</button>
+                <div class="profile" id="headerProfile"></div>
+            </div>
+        </header>
+
+        <div class="table-container" style="max-width: 650px; margin: 0 auto;">
+            <form id="claimForm">
+                <div class="form-group">
+                    <label>เลือกประเภทสวัสดิการ</label>
+                    <select id="type" class="form-control" required>
+                        <option value="">-- เลือกประเภทสวัสดิการ --</option>
+                        <option value="ค่ารักษาพยาบาล">ค่ารักษาพยาบาล</option>
+                        <option value="ค่าเล่าเรียนบุตร">ค่าเล่าเรียนบุตร</option>
+                        <option value="เงินช่วยเหลือพนักงาน">เงินช่วยเหลือพนักงาน</option>
+                        <option value="เงินทุนการศึกษา">เงินทุนการศึกษา</option>
+                    </select>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="form-group">
+                        <label>จำนวนเงินขอเบิก (บาท)</label>
+                        <input id="amount" type="number" class="form-control" placeholder="เช่น 5000" required>
+                    </div>
+                    <div class="form-group">
+                        <label>วันที่เกิดเหตุ / วันที่ใช้บริการ</label>
+                        <input id="date" type="date" class="form-control" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>รายละเอียดเพิ่มเติม</label>
+                    <textarea class="form-control" rows="3" placeholder="กรอกรายละเอียดเพิ่มเติม..."></textarea>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-top: 25px;">
+                    <a href="../หน้า HOME/index.html" class="btn btn-secondary">ยกเลิก</a>
+                    <button type="submit" class="btn btn-primary">ถัดไป &gt;</button>
+                </div>
+            </form>
+        </div>
+    </main>
+</div>
+
+<script>
+renderSidebarMenu('claim');
+
+document.getElementById('claimForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const user = getCurrentUser();
+    const type = document.getElementById('type').value;
+    const amount = Number(document.getElementById('amount').value).toLocaleString();
+    
+    addClaim({
+        id: "SV-" + Math.floor(100000 + Math.random() * 900000),
+        type: type,
+        date: "วันนี้",
+        amount: amount,
+        status: "รอตรวจสอบ",
+        emp: user.name
+    });
+    
+    alert('บันทึกและส่งคำขอสวัสดิการเรียบร้อยแล้ว!');
+    window.location.href = 'my-claims.html';
+});
+</script>
+</body>
+</html>

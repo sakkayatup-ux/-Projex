@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3. ข้อมูลพนักงาน (โปรไฟล์)</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../Data/data.js"></script>
+    <style>
+        .profile-container { display: flex; gap: 30px; background: white; border-radius: 12px; padding: 25px; border: 1px solid #dae8f6; }
+        .profile-card { width: 250px; border-right: 1px solid #eef4fb; padding-right: 25px; text-align: center; }
+        .profile-avatar { width: 90px; height: 90px; background: #e3edfe; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 36px; color: #07305b; margin: 0 auto 15px; }
+        .info-group { margin-bottom: 15px; font-size: 14px; }
+        .info-group label { color: #788592; display: block; margin-bottom: 4px; }
+        .info-group span { color: #07305b; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <aside class="sidebar">
+        <div class="logo">ระบบข้อมูลพนักงาน<br>&nbsp;และสวัสดิการ</div>
+        <ul class="menu" id="mainMenu"></ul>
+    </aside>
+
+    <main class="main">
+        <header class="header">
+            <div class="logo-title">ข้อมูลพนักงาน</div>
+            <div class="header-right">
+                <button class="notif-btn">🔔</button>
+                <div class="profile" id="headerProfile"></div>
+            </div>
+        </header>
+
+        <div class="profile-container">
+            <div class="profile-card">
+                <div class="profile-avatar" id="profAvatar">👨‍💼</div>
+                <h3 style="color: #07305b; margin-bottom: 5px;" id="profName">นนท์ วัฒนกิจ</h3>
+                <p style="color: #788592; font-size: 13px;" id="profId">รหัสพนักงาน : EMP00123</p>
+                <p style="color: #1c75cb; font-size: 13px; margin-top: 5px;" id="profRole">ตำแหน่ง : พนักงาน</p>
+                <hr style="margin: 15px 0; border: none; border-top: 1px solid #eee;">
+                <p style="font-size: 13px; color: #4b5a69;" id="profDept">หน่วยงาน : ฝ่ายการตลาด</p>
+                <p style="font-size: 13px; color: #4b5a69;">ประเภทพนักงาน : พนักงานประจำ</p>
+                <p style="font-size: 13px; color: #4b5a69;">วันที่เริ่มงาน : 15 ม.ค. 2565 (2 ปี)</p>
+            </div>
+
+            <div style="flex: 1;">
+                <h3 style="color: #07305b; margin-bottom: 20px;">ข้อมูลส่วนตัว</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="info-group"><label>ชื่อ-นามสกุล</label><span id="profFullName">นาย นนท์ วัฒนกิจ</span></div>
+                    <div class="info-group"><label>อีเมล</label><span>user@company.com</span></div>
+                    <div class="info-group"><label>เบอร์โทรศัพท์</label><span>081-234-5678</span></div>
+                    <div class="info-group"><label>วันเกิด</label><span>12 มิ.ย. 2543</span></div>
+                    <div class="info-group" style="grid-column: span 2;"><label>ที่อยู่</label><span>123/45 ถนนสุขุมวิท แขวงคลองเตย เขตคลองเตย กรุงเทพฯ 10110</span></div>
+                    <div class="info-group"><label>สถานะการทำงาน</label><span style="color: #22a068;">ปกติ</span></div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+renderSidebarMenu('profile');
+
+// ดึงข้อมูลผู้ใช้ปัจจุบันมาแสดงบนโปรไฟล์
+const user = getCurrentUser();
+document.getElementById('profName').innerText = user.name;
+document.getElementById('profFullName').innerText = user.name;
+document.getElementById('profId').innerText = 'รหัสพนักงาน : ' + user.id;
+document.getElementById('profRole').innerText = 'ตำแหน่ง : ' + user.roleName;
+document.getElementById('profDept').innerText = 'หน่วยงาน : ' + user.dept;
+</script>
+</body>
+</html>
