@@ -1,0 +1,125 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f7fb;
+    color: #1e293b;
+    line-height: 1.5;
+}
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 250px;
+    height: 100vh;
+    background: #1e3a8a;
+    padding: 25px 15px;
+    color: #ffffff;
+    z-index: 100;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+    padding-bottom: 30px;
+    color: #ffffff;
+}
+
+.menu {
+    display: block;
+    text-decoration: none;
+    color: #ffffff;
+    padding: 14px 18px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    transition: background 0.2s ease;
+}
+
+.menu:hover,
+.menu.active {
+    background: #2563eb;
+}
+
+.logout-btn {
+    position: absolute;
+    bottom: 25px;
+    left: 15px;
+    width: calc(100% - 30px);
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #dc2626;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+    transition: background 0.2s ease;
+}
+
+.logout-btn:hover {
+    background: #b91c1c;
+}
+
+.main-content {
+    margin-left: 250px;
+    min-height: 100vh;
+    padding: 30px;
+}
+
+.topbar {
+    background: #ffffff;
+    padding: 20px 25px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.topbar h1 {
+    margin-bottom: 5px;
+    font-size: 24px;
+    color: #0f172a;
+}
+
+.topbar p {
+    color: #64748b;
+    font-size: 14px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-icon {
+    width: 42px;
+    height: 42px;
+    background: #2563eb;
+    color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+
+.user-info small {
+    display: block;
+    color: #64748b;
+    margin-top: 3px;
+}
+
+@media (max-width: 600px) {
+    .sidebar { width: 200px; }
+    .main-content { margin-left: 200px; padding: 15px; }
+    .topbar { flex-direction: column; align-items: flex-start; gap: 15px; }
+}

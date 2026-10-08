@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สวัสดิการของฉัน - ระบบสวัสดิการ</title>
+    
+    <!-- ดึงไฟล์ CSS ที่แยกไว้ -->
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/welfare.css">
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo">ระบบสวัสดิการ</div>
+        <nav>
+            <a href="employee.html" class="menu">🏠 หน้าหลัก</a>
+            <a href="my-welfare.html" class="menu active">🎁 สวัสดิการของฉัน</a>
+            <a href="request.html" class="menu">📝 ยื่นคำขอสวัสดิการ</a>
+            <a href="profile.html" class="menu">👤 ข้อมูลส่วนตัว</a>
+            <a href="history.html" class="menu">📋 ประวัติคำขอ / กิจกรรม</a>
+        </nav>
+        <button class="logout-btn" onclick="logout()">ออกจากระบบ</button>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="topbar">
+            <div>
+                <h1>🎁 สวัสดิการของฉัน</h1>
+                <p>สิทธิประโยชน์และวงเงินสวัสดิการประจำปีของคุณ</p>
+            </div>
+            <div class="user-info">
+                <div class="user-icon">E</div>
+                <div>
+                    <strong id="usernameDisplay">พนักงาน</strong>
+                    <small>ผู้ใช้งานทั่วไป</small>
+                </div>
+            </div>
+        </header>
+
+        <div class="welfare-grid">
+            
+            <!-- ค่ารักษาพยาบาล -->
+            <div class="welfare-card">
+                <div class="welfare-header">
+                    <span class="welfare-icon">🏥</span>
+                    <div>
+                        <h3>ค่ารักษาพยาบาล (Medical)</h3>
+                        <span class="badge active">ใช้งานได้</span>
+                    </div>
+                </div>
+                <p class="welfare-desc">ครอบคลุมค่าตรวจรักษา OPD/IPD, ค่ายา, ค่าทำฟัน และตรวจสุขภาพประจำปี</p>
+                <div class="limit-box">
+                    <div class="limit-info">
+                        <span>วงเงินคงเหลือ</span>
+                        <strong>15,000 / 20,000 บาท/ปี</strong>
+                    </div>
+                    <div class="progress-bar"><div class="progress" style="width: 75%;"></div></div>
+                </div>
+                <ul class="welfare-details">
+                    <li>✔️ ค่าตรวจรักษา OPD สูงสุด 2,000 บาท/ครั้ง</li>
+                    <li>✔️ ค่าทำฟัน 3,000 บาท/ปี</li>
+                    <li>✔️ ต้องแนบใบเสร็จและใบรับรองแพทย์ฉบับจริง</li>
+                </ul>
+                <a href="request.html" class="action-btn">ยื่นเบิกสวัสดิการนี้</a>
+            </div>
+
+            <!-- ค่าพัฒนาตนเอง -->
+            <div class="welfare-card">
+                <div class="welfare-header">
+                    <span class="welfare-icon">🎓</span>
+                    <div>
+                        <h3>ค่าพัฒนาตนเอง (Education)</h3>
+                        <span class="badge active">ใช้งานได้</span>
+                    </div>
+                </div>
+                <p class="welfare-desc">สนับสนุนค่าเรียน คอร์สออนไลน์ อบรมสัมมนา และค่าสอบคุณวุฒิวิชาชีพ</p>
+                <div class="limit-box">
+                    <div class="limit-info">
+                        <span>วงเงินคงเหลือ</span>
+                        <strong>10,000 / 10,000 บาท/ปี</strong>
+                    </div>
+                    <div class="progress-bar"><div class="progress" style="width: 100%;"></div></div>
+                </div>
+                <ul class="welfare-details">
+                    <li>✔️ คอร์สเรียนสอดคล้องกับสายงาน เบิกได้ 100%</li>
+                    <li>✔️ ต้องแนบใบเสร็จและวุฒิบัตร/หนังสือรับรอง</li>
+                </ul>
+                <a href="request.html" class="action-btn">ยื่นเบิกสวัสดิการนี้</a>
+            </div>
+
+            <!-- ค่าเดินทาง -->
+            <div class="welfare-card">
+                <div class="welfare-header">
+                    <span class="welfare-icon">🚗</span>
+                    <div>
+                        <h3>ค่าเดินทาง (Travel Allowance)</h3>
+                        <span class="badge active">ใช้งานได้</span>
+                    </div>
+                </div>
+                <p class="welfare-desc">ช่วยเหลือค่าเดินทางปฏิบัติงานนอกสถานที่ ค่าน้ำมัน ค่าทางด่วน</p>
+                <div class="limit-box">
+                    <div class="limit-info">
+                        <span>วงเงินคงเหลือ</span>
+                        <strong>5,000 / 5,000 บาท/เดือน</strong>
+                    </div>
+                    <div class="progress-bar"><div class="progress" style="width: 100%;"></div></div>
+                </div>
+                <ul class="welfare-details">
+                    <li>✔️ ค่าน้ำมันตามระยะทางจริง (กม.ละ 6 บาท)</li>
+                    <li>✔️ ต้องแนบใบบันทึกการเดินทาง (Logbook)</li>
+                </ul>
+                <a href="request.html" class="action-btn">ยื่นเบิกสวัสดิการนี้</a>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        const username = localStorage.getItem("username");
+        if (username) {
+            document.getElementById("usernameDisplay").textContent = username;
+        }
+
+        function logout() {
+            localStorage.clear();
+            window.location.href = "../login/login.html";
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+/* ==========================================================================
+   PROFILE PAGE STYLES
+   ========================================================================== */
+
+.profile-card {
+    background: #ffffff;
+    padding: 32px;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #f1f5f9;
+    margin-bottom: 28px;
+}
+
+.avatar-lg {
+    width: 80px;
+    height: 80px;
+    background: #2563eb;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #1e3a8a;
+    margin: 24px 0 16px 0;
+    border-left: 4px solid #2563eb;
+    padding-left: 10px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 16px;
+}
+
+.info-item {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 14px 18px;
+    border-radius: 10px;
+}
+
+.info-item .label {
+    font-size: 12px;
+    color: #64748b;
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.info-item .value {
+    font-size: 15px;
+    font-weight: 600;
+    color: #0f172a;
+}
+
+.badge-status {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    background-color: #dcfce7;
+    color: #166534;
+}

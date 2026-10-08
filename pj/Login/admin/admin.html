@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>หน้าหลัก Admin</title>
+
+    <!-- เรียกใช้ CSS ที่แยกไว้ -->
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo">ระบบสวัสดิการ</div>
+        <nav>
+            <a href="admin.html" class="menu active">🏠 หน้าหลัก</a>
+            <a href="#" class="menu">📋 คำขอสวัสดิการ</a>
+            <a href="#" class="menu">👥 จัดการพนักงาน</a>
+            <a href="#" class="menu">📊 รายงาน</a>
+            <a href="#" class="menu">⚙️ ตั้งค่าระบบ</a>
+        </nav>
+        <button class="logout-btn" onclick="logout()">ออกจากระบบ</button>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="topbar">
+            <div>
+                <h1>หน้าหลัก</h1>
+                <p>ภาพรวมระบบสวัสดิการ</p>
+            </div>
+            <div class="user-info">
+                <div class="user-icon">A</div>
+                <div>
+                    <strong id="username">Admin</strong>
+                    <small>ผู้ดูแลระบบ</small>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard -->
+        <section class="dashboard">
+            <h2>ภาพรวมระบบ</h2>
+            <div class="cards">
+                <div class="card">
+                    <div class="card-icon">📋</div>
+                    <div>
+                        <p>คำขอทั้งหมด</p>
+                        <h3>25</h3>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-icon">⏳</div>
+                    <div>
+                        <p>รอตรวจสอบ</p>
+                        <h3>8</h3>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-icon">✅</div>
+                    <div>
+                        <p>อนุมัติแล้ว</p>
+                        <h3>14</h3>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-icon">❌</div>
+                    <div>
+                        <p>ไม่อนุมัติ</p>
+                        <h3>3</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Requests -->
+            <div class="content-box">
+                <div class="box-header">
+                    <h2>คำขอล่าสุด</h2>
+                    <button class="view-btn">ดูทั้งหมด</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>รหัสคำขอ</th>
+                            <th>พนักงาน</th>
+                            <th>ประเภทสวัสดิการ</th>
+                            <th>วันที่ยื่น</th>
+                            <th>สถานะ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>REQ001</td>
+                            <td>สมชาย ใจดี</td>
+                            <td>ค่ารักษาพยาบาล</td>
+                            <td>07/10/2026</td>
+                            <td><span class="status pending">รอตรวจสอบ</span></td>
+                        </tr>
+                        <tr>
+                            <td>REQ002</td>
+                            <td>สุดา ใจงาม</td>
+                            <td>ค่าเล่าเรียน</td>
+                            <td>06/10/2026</td>
+                            <td><span class="status approved">อนุมัติแล้ว</span></td>
+                        </tr>
+                        <tr>
+                            <td>REQ003</td>
+                            <td>กิตติ ศรีสุข</td>
+                            <td>สวัสดิการครอบครัว</td>
+                            <td>05/10/2026</td>
+                            <td><span class="status rejected">ไม่อนุมัติ</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const username = localStorage.getItem("username");
+        if (username) {
+            document.getElementById("username").textContent = username;
+        }
+
+        function logout() {
+            localStorage.removeItem("username");
+            localStorage.removeItem("role");
+            window.location.href = "../login/login.html";
+        }
+    </script>
+</body>
+</html>

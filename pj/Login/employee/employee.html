@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>หน้าหลักพนักงาน - ระบบสวัสดิการ</title>
+    
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/employee.css">
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo">ระบบสวัสดิการ</div>
+        <nav>
+            <a href="employee.html" class="menu active">🏠 หน้าหลัก</a>
+            <a href="my-welfare.html" class="menu">🎁 สวัสดิการของฉัน</a>
+            <a href="request.html" class="menu">📝 ยื่นคำขอสวัสดิการ</a>
+            <a href="profile.html" class="menu">👤 ข้อมูลส่วนตัว</a>
+            <a href="history.html" class="menu">📋 ประวัติคำขอ / กิจกรรม</a>
+        </nav>
+        <button class="logout-btn" onclick="logout()">ออกจากระบบ</button>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="topbar">
+            <div>
+                <h1>หน้าหลักพนักงาน</h1>
+                <p>ยินดีต้อนรับกลับเข้าสู่ระบบสวัสดิการ</p>
+            </div>
+            <div class="user-info">
+                <div class="user-icon" id="userIcon">พ</div>
+                <div>
+                    <strong id="usernameDisplay">พนักงาน</strong>
+                    <small>ผู้ใช้งานทั่วไป</small>
+                </div>
+            </div>
+        </header>
+
+        <!-- การ์ดสรุปข้อมูล -->
+        <div class="stats-grid">
+            <div class="stat-card blue">
+                <h3>วงเงินสวัสดิการคงเหลือ</h3>
+                <div class="value" id="remainingLimit">30,000 ฿</div>
+            </div>
+            <div class="stat-card yellow">
+                <h3>รายการรออนุมัติ</h3>
+                <div class="value" id="pendingCount">0 รายการ</div>
+            </div>
+            <div class="stat-card green">
+                <h3>เบิกสำเร็จแล้ว (ปีนี้)</h3>
+                <div class="value" id="totalApproved">0 ฿</div>
+            </div>
+        </div>
+
+        <!-- ตารางประวัติล่าสุด -->
+        <div class="table-card">
+            <h2>รายการยื่นขอสวัสดิการล่าสุด</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>วันที่ยื่น</th>
+                        <th>ประเภทสวัสดิการ</th>
+                        <th>จำนวนเงิน</th>
+                        <th>สถานะ</th>
+                    </tr>
+                </thead>
+                <tbody id="recentTableBody">
+                    <!-- แสดงรายการโดยอัตโนมัติ -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script src="../js/activityLogger.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // 1. ดึงชื่อผู้ใช้
+            const username = localStorage.getItem("username") || "พนักงาน";
+            document.getElementById("usernameDisplay").textContent = username;
+            document.getElementById("userIcon").textContent = username.charAt(0).toUpperCase();
+
+            // 2. กำหนดวงเงินตั้งต้น (30,000 บาท)
+            const TOTAL_LIMIT = 30000;
+
+            // 3. ดึงรายการคำขอสวัสดิการ (ถ้ายังไม่มี ให้โหลดค่าเริ่มต้น)
+            let requests = JSON.parse(localStorage.getItem("welfareRequests"));
+            if (!requests) {
+                requests = [
+                    { id: "REQ001", date: "08/10/2026", type: "ค่ารักษาพยาบาล (OPD)", amount: 1500, status: "รออนุมัติ" },
+                    { id: "REQ002", date: "15/09/2026", type: "ค่าทำฟัน", amount: 3500, status: "อนุมัติแล้ว" }
+                ];
+                localStorage.setItem("welfareRequests", JSON.stringify(requests));
+            }
+
+            // 4. คำนวณสรุปผลตามข้อมูลจริงใน localStorage
+            let pendingCount = 0;
+            let totalApproved = 0;
+
+            requests.forEach(req => {
+                const amt = Number(req.amount) || 0;
+                if (req.status === "อนุมัติแล้ว") {
+                    totalApproved += amt;
+                } else if (req.status === "รออนุมัติ" || req.status === "รอตรวจสอบ") {
+                    pendingCount += 1;
+                }
+            });
+
+            const remaining = TOTAL_LIMIT - totalApproved;
+
+            // 5. แสดงผลการ์ด
+            document.getElementById("remainingLimit").textContent = remaining.toLocaleString() + " ฿";
+            document.getElementById("pendingCount").textContent = pendingCount + " รายการ";
+            document.getElementById("totalApproved").textContent = totalApproved.toLocaleString() + " ฿";
+
+            // 6. แสดงผลตารางยื่นคำขอ
+            const tableBody = document.getElementById("recentTableBody");
+            if (requests.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:#64748b;">ไม่มีรายการยื่นคำขอ</td></tr>`;
+            } else {
+                tableBody.innerHTML = requests.slice(0, 5).map(req => {
+                    let statusClass = "pending";
+                    if (req.status === "อนุมัติแล้ว") statusClass = "approved";
+                    if (req.status === "ไม่อนุมัติ") statusClass = "rejected";
+
+                    return `
+                        <tr>
+                            <td>${req.date}</td>
+                            <td>${req.type}</td>
+                            <td>${Number(req.amount).toLocaleString()} ฿</td>
+                            <td><span class="status ${statusClass}">${req.status}</span></td>
+                        </tr>
+                    `;
+                }).join("");
+            }
+        });
+
+        // ล็อกเอาต์อย่างปลอดภัย ไม่ลบข้อมูลสวัสดิการ
+        function logout() {
+            if (typeof logUserActivity === "function") {
+                logUserActivity("ออกจากระบบ", "ผู้ใช้งานได้ทำการออกจากระบบ");
+            }
+            localStorage.removeItem("username");
+            window.location.href = "../login/login.html";
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ยื่นคำขอสวัสดิการ - ระบบสวัสดิการ</title>
+    
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/request.css">
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo">ระบบสวัสดิการ</div>
+        <nav>
+            <a href="employee.html" class="menu">🏠 หน้าหลัก</a>
+            <a href="my-welfare.html" class="menu">🎁 สวัสดิการของฉัน</a>
+            <a href="request.html" class="menu active">📝 ยื่นคำขอสวัสดิการ</a>
+            <a href="profile.html" class="menu">👤 ข้อมูลส่วนตัว</a>
+            <a href="history.html" class="menu">📋 ประวัติคำขอ / กิจกรรม</a>
+        </nav>
+        <button class="logout-btn" onclick="logout()">ออกจากระบบ</button>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="topbar">
+            <div>
+                <h1>📝 ยื่นคำขอสวัสดิการ</h1>
+                <p>กรอกข้อมูลและแนบหลักฐานการขอเบิกสวัสดิการ</p>
+            </div>
+            <div class="user-info">
+                <div class="user-icon" id="userIcon">พ</div>
+                <div>
+                    <strong id="usernameDisplay">พนักงาน</strong>
+                    <small>ผู้ใช้งานทั่วไป</small>
+                </div>
+            </div>
+        </header>
+
+        <div class="form-card">
+            <form id="welfareForm" onsubmit="handleFormSubmit(event)">
+                
+                <!-- เลือกประเภทสวัสดิการ -->
+                <div class="form-grid">
+                    <div class="form-group full-width">
+                        <label for="welfareType">ประเภทสวัสดิการที่ต้องการเบิก <span class="required">*</span></label>
+                        <select id="welfareType" class="form-control" onchange="updateLimitDisplay()" required>
+                            <option value="">-- กรุณาเลือกประเภทสวัสดิการ --</option>
+                            <option value="ค่ารักษาพยาบาล (OPD)">🏥 ค่ารักษาพยาบาล (OPD)</option>
+                            <option value="ค่าทำฟัน">🦷 ค่าทำฟัน</option>
+                            <option value="ค่าพัฒนาตนเอง">🎓 ค่าพัฒนาตนเอง / คอร์สเรียน</option>
+                            <option value="ค่าเดินทาง">🚗 ค่าเดินทางปฏิบัติงาน</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- กล่องแสดงวงเงินคงเหลือจริงของประเภทนี้ -->
+                <div class="limit-info-box" id="limitBox" style="display: none;">
+                    <span>วงเงินคงเหลือของประเภทนี้:</span>
+                    <strong id="currentLimitText">0 ฿</strong>
+                </div>
+
+                <!-- วันที่ และ เลขที่ใบเสร็จ -->
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="receiptDate">วันที่ตามใบเสร็จ <span class="required">*</span></label>
+                        <input type="date" id="receiptDate" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="receiptNo">เลขที่ใบเสร็จ</label>
+                        <input type="text" id="receiptNo" class="form-control" placeholder="เช่น INV-2026-001">
+                    </div>
+                </div>
+
+                <!-- จำนวนเงิน -->
+                <div class="form-grid">
+                    <div class="form-group full-width">
+                        <label for="amount">จำนวนเงินที่ต้องการเบิก (บาท) <span class="required">*</span></label>
+                        <input type="number" id="amount" class="form-control" placeholder="0.00" min="1" step="0.01" required>
+                    </div>
+                </div>
+
+                <!-- อัปโหลดรูปภาพหลักฐาน -->
+                <div class="form-grid">
+                    <div class="form-group full-width">
+                        <label>แนบรูปภาพใบเสร็จ / หลักฐาน <span class="required">*</span></label>
+                        <div class="file-upload-wrapper" onclick="document.getElementById('receiptImage').click();">
+                            <input type="file" id="receiptImage" accept="image/*" onchange="previewImage(event)" required>
+                            <div class="file-upload-label">
+                                📷 <span>คลิกเพื่อเลือกรูปภาพใบเสร็จ</span>
+                                <small style="color: #94a3b8; font-size: 12px; margin-top: 4px;">รองรับไฟล์ .jpg, .png, .jpeg</small>
+                            </div>
+                        </div>
+
+                        <!-- Preview รูปภาพ -->
+                        <div class="image-preview-container" id="previewContainer">
+                            <img id="imagePreview" src="" alt="ตัวอย่างหลักฐาน">
+                            <button type="button" class="remove-img-btn" onclick="removeImage()">×</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- หมายเหตุ / รายละเอียดเพิ่มเติม -->
+                <div class="form-grid">
+                    <div class="form-group full-width">
+                        <label for="remark">รายละเอียดการจ่าย / เหตุผลความจำเป็น</label>
+                        <textarea id="remark" class="form-control" rows="3" placeholder="ระบุรายละเอียดเพิ่มเติม..."></textarea>
+                    </div>
+                </div>
+
+                <!-- ปุ่ม Submit / Cancel -->
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="window.location.href='employee.html'">ยกเลิก</button>
+                    <button type="submit" class="btn btn-primary">🚀 ยื่นคำขอเบิกสวัสดิการ</button>
+                </div>
+
+            </form>
+        </div>
+    </main>
+
+    <script src="../js/activityLogger.js"></script>
+    <script>
+        // วงเงินสูงสุดของแต่ละประเภท
+        const welfareLimits = {
+            "ค่ารักษาพยาบาล (OPD)": 15000,
+            "ค่าทำฟัน": 3000,
+            "ค่าพัฒนาตนเอง": 10000,
+            "ค่าเดินทาง": 5000
+        };
+
+        let base64Image = "";
+        let currentCategoryRemaining = 0; // เก็บวงเงินคงเหลือจริงของประเภทที่เลือก
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const username = localStorage.getItem("username") || "พนักงาน";
+            document.getElementById("usernameDisplay").textContent = username;
+            document.getElementById("userIcon").textContent = username.charAt(0).toUpperCase();
+
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById("receiptDate").value = today;
+        });
+
+        // คำนวณวงเงินคงเหลือของประเภทสวัสดิการที่เลือกแบบเรียลไทม์
+        function updateLimitDisplay() {
+            const selectedType = document.getElementById("welfareType").value;
+            const limitBox = document.getElementById("limitBox");
+            const currentLimitText = document.getElementById("currentLimitText");
+
+            if (!selectedType || welfareLimits[selectedType] === undefined) {
+                limitBox.style.display = "none";
+                return;
+            }
+
+            const maxLimit = welfareLimits[selectedType];
+            const requests = JSON.parse(localStorage.getItem("welfareRequests")) || [];
+
+            // คำนวณรวมยอดที่เคยยื่นขอไปแล้วของประเภทนี้ (ยกเว้นรายการที่ไม่อนุมัติ)
+            let usedAmount = 0;
+            requests.forEach(req => {
+                if (req.type === selectedType && req.status !== "ไม่อนุมัติ") {
+                    usedAmount += Number(req.amount) || 0;
+                }
+            });
+
+            // คำนวณยอดคงเหลือจริง
+            currentCategoryRemaining = Math.max(0, maxLimit - usedAmount);
+
+            limitBox.style.display = "flex";
+            currentLimitText.textContent = currentCategoryRemaining.toLocaleString() + " ฿";
+        }
+
+        // Preview รูปภาพ
+        function previewImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    base64Image = e.target.result;
+                    document.getElementById("imagePreview").src = base64Image;
+                    document.getElementById("previewContainer").style.display = "block";
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // ลบรูปภาพ
+        function removeImage() {
+            document.getElementById("receiptImage").value = "";
+            document.getElementById("imagePreview").src = "";
+            document.getElementById("previewContainer").style.display = "none";
+            base64Image = "";
+        }
+
+        // กดส่งฟอร์ม
+        function handleFormSubmit(event) {
+            event.preventDefault();
+
+            const type = document.getElementById("welfareType").value;
+            const amount = Number(document.getElementById("amount").value);
+            const receiptNo = document.getElementById("receiptNo").value || "-";
+
+            // ตรวจสอบว่าจำนวนเงินเกินวงเงินคงเหลือจริงหรือไม่
+            if (amount > currentCategoryRemaining) {
+                alert(`⚠️ ยอดเงินที่ต้องการเบิก (${amount.toLocaleString()} ฿) เกินวงเงินคงเหลือของ ${type} (${currentCategoryRemaining.toLocaleString()} ฿)`);
+                return;
+            }
+
+            if (!base64Image) {
+                alert("⚠️ กรุณาแนบรูปภาพใบเสร็จ/หลักฐานก่อนยื่นคำขอ");
+                return;
+            }
+
+            const receiptDate = document.getElementById("receiptDate").value;
+            const dateParts = receiptDate.split('-');
+            const formattedDate = `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`;
+
+            const newRequest = {
+                id: "REQ" + Math.floor(1000 + Math.random() * 9000),
+                date: formattedDate,
+                type: type,
+                amount: amount,
+                receiptNo: receiptNo,
+                imageUrl: base64Image,
+                remark: document.getElementById("remark").value || "-",
+                status: "รออนุมัติ"
+            };
+
+            const existingRequests = JSON.parse(localStorage.getItem("welfareRequests")) || [];
+            existingRequests.unshift(newRequest);
+            localStorage.setItem("welfareRequests", JSON.stringify(existingRequests));
+
+            if (typeof logUserActivity === "function") {
+                logUserActivity("ยื่นขอสวัสดิการ", `ยื่นเบิก ${type} จำนวน ${amount.toLocaleString()} ฿`);
+            }
+
+            alert("✅ ส่งคำขอเบิกสวัสดิการเรียบร้อยแล้ว!");
+            window.location.href = "employee.html";
+        }
+
+        function logout() {
+            if (typeof logUserActivity === "function") {
+                logUserActivity("ออกจากระบบ", "ผู้ใช้งานได้ทำการออกจากระบบ");
+            }
+            localStorage.removeItem("username");
+            window.location.href = "../login/login.html";
+        }
+    </script>
+</body>
+</html>

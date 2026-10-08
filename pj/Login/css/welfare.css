@@ -1,0 +1,121 @@
+/* Grid Layout */
+.welfare-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+}
+
+.welfare-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.welfare-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 12px;
+}
+
+.welfare-icon {
+    font-size: 32px;
+    background: #eff6ff;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.welfare-header h3 {
+    font-size: 16px;
+    color: #1e293b;
+    margin-bottom: 4px;
+}
+
+.badge {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-weight: bold;
+}
+
+.badge.active {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.welfare-desc {
+    font-size: 13px;
+    color: #64748b;
+    line-height: 1.5;
+    margin-bottom: 16px;
+}
+
+/* Limit & Progress Bar */
+.limit-box {
+    background: #f8fafc;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+}
+
+.limit-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    margin-bottom: 8px;
+}
+
+.limit-info span { color: #64748b; }
+.limit-info strong { color: #2563eb; }
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: #e2e8f0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    background: #2563eb;
+    border-radius: 4px;
+}
+
+/* Details List */
+.welfare-details {
+    list-style: none;
+    font-size: 12px;
+    color: #334155;
+    margin-bottom: 20px;
+}
+
+.welfare-details li {
+    margin-bottom: 6px;
+}
+
+/* Action Button */
+.action-btn {
+    display: block;
+    text-align: center;
+    background: #2563eb;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.action-btn:hover {
+    background: #1d4ed8;
+}
+
+.action-btn:active {
+    transform: scale(0.98);
+}

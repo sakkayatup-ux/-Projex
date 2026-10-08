@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ข้อมูลส่วนตัว - ระบบสวัสดิการ</title>
+    
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/profile.css">
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo">ระบบสวัสดิการ</div>
+        <nav>
+            <a href="employee.html" class="menu">🏠 หน้าหลัก</a>
+            <a href="my-welfare.html" class="menu">🎁 สวัสดิการของฉัน</a>
+            <a href="request.html" class="menu">📝 ยื่นคำขอสวัสดิการ</a>
+            <a href="profile.html" class="menu active">👤 ข้อมูลส่วนตัว</a>
+            <a href="history.html" class="menu">📋 ประวัติคำขอ / กิจกรรม</a>
+        </nav>
+        <button class="logout-btn" onclick="logout()">ออกจากระบบ</button>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="topbar">
+            <div>
+                <h1>👤 ข้อมูลส่วนตัว</h1>
+                <p>รายละเอียดข้อมูลพนักงาน ประวัติตามบัตรประชาชน และสถานะการทำงาน</p>
+            </div>
+            <div class="user-info">
+                <div class="user-icon" id="topUserIcon">พ</div>
+                <div>
+                    <strong id="topUsername">พนักงาน</strong>
+                    <small>ผู้ใช้งานทั่วไป</small>
+                </div>
+            </div>
+        </header>
+
+        <div class="profile-card">
+            <!-- Header ส่วนตัว -->
+            <div class="profile-header">
+                <div class="avatar-lg" id="avatarIcon">พ</div>
+                <div>
+                    <h2 style="margin: 0; font-size: 22px; color: #0f172a;" id="profileName">-</h2>
+                    <p style="margin: 4px 0 0 0; color: #64748b; font-size: 14px;" id="profilePosition">ตำแหน่ง: -</p>
+                </div>
+            </div>
+
+            <!-- 🪪 1. ข้อมูลประวัติตามบัตรประชาชน -->
+            <div class="section-title">🪪 ข้อมูลประวัติตามบัตรประชาชน</div>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="label">เลขบัตรประจำตัวประชาชน</div>
+                    <div class="value" id="idCardNo">-</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">ชื่อ-นามสกุล (ไทย)</div>
+                    <div class="value" id="fullNameTh">-</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">Name-Surname (English)</div>
+                    <div class="value" id="fullNameEn">-</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">วัน/เดือน/ปีเกิด</div>
+                    <div class="value" id="birthDate">-</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">สัญชาติ / เชื้อชาติ / ศาสนา</div>
+                    <div class="value">ไทย / ไทย / พุทธ</div>
+                </div>
+                <div class="info-item" style="grid-column: 1 / -1;">
+                    <div class="label">ที่อยู่ตามทะเบียนบ้าน</div>
+                    <div class="value" id="address">-</div>
+                </div>
+            </div>
+
+            <!-- 🏢 2. สถานะกับโรงงาน / องค์กร -->
+            <div class="section-title">🏢 สถานะการทำงานในโรงงาน / องค์กร</div>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="label">รหัสพนักงาน</div>
+                    <div class="value" id="empId">-</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">สังกัดโรงงาน / สาขา</div>
+                    <div class="value" id="plant">-</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">แผนก / ฝ่าย</div>
+                    <div class="value" id="dept">-</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">สถานะพนักงาน</div>
+                    <div class="value"><span class="badge-status">● พนักงานประจำ (Full-Time)</span></div>
+                </div>
+                <div class="info-item">
+                    <div class="label">วันที่เริ่มงาน</div>
+                    <div class="value" id="startDate">-</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">กะการทำงาน / กะปฏิบัติงาน</div>
+                    <div class="value" id="shift">-</div>
+                </div>
+            </div>
+
+            <!-- 📞 3. ข้อมูลการติดต่อและบุคคลฉุกเฉิน -->
+            <div class="section-title">📞 ข้อมูลการติดต่อ</div>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="label">อีเมลบริษัท</div>
+                    <div class="value" id="email">-</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">เบอร์โทรศัพท์มือถือ</div>
+                    <div class="value" id="phone">-</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">ผู้ติดต่อฉุกเฉิน</div>
+                    <div class="value" id="emergencyContact">-</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/activityLogger.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const storedData = localStorage.getItem("userData");
+            if (!storedData) return;
+
+            const user = JSON.parse(storedData);
+
+            document.getElementById("topUsername").textContent = user.username;
+            document.getElementById("topUserIcon").textContent = user.username.charAt(0);
+            document.getElementById("avatarIcon").textContent = user.username.charAt(0);
+
+            document.getElementById("profileName").textContent = user.username;
+            document.getElementById("profilePosition").textContent = "ตำแหน่ง: " + (user.position || "-");
+            document.getElementById("idCardNo").textContent = user.idCard || "-";
+            document.getElementById("fullNameTh").textContent = user.username;
+            document.getElementById("fullNameEn").textContent = user.fullNameEn || "-";
+            document.getElementById("birthDate").textContent = user.birthDate || "-";
+            document.getElementById("address").textContent = user.address || "-";
+            document.getElementById("empId").textContent = user.empId || "-";
+            document.getElementById("plant").textContent = user.plant || "-";
+            document.getElementById("dept").textContent = user.dept || "-";
+            document.getElementById("startDate").textContent = user.startDate || "-";
+            document.getElementById("shift").textContent = user.shift || "-";
+            document.getElementById("email").textContent = user.email || "-";
+            document.getElementById("phone").textContent = user.phone || "-";
+            document.getElementById("emergencyContact").textContent = user.emergencyContact || "-";
+        });
+
+        function logout() {
+            if (typeof logUserActivity === "function") {
+                logUserActivity("ออกจากระบบ", "ผู้ใช้งานได้ทำการออกจากระบบ");
+            }
+            localStorage.clear();
+            window.location.href = "../login/login.html";
+        }
+    </script>
+</body>
+</html>

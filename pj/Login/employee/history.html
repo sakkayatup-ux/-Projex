@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ประวัติกิจกรรมการใช้งาน - ระบบสวัสดิการ</title>
+    
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/history.css">
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo">ระบบสวัสดิการ</div>
+        <nav>
+            <a href="employee.html" class="menu">🏠 หน้าหลัก</a>
+            <a href="my-welfare.html" class="menu">🎁 สวัสดิการของฉัน</a>
+            <a href="request.html" class="menu">📝 ยื่นคำขอสวัสดิการ</a>
+            <a href="profile.html" class="menu">👤 ข้อมูลส่วนตัว</a>
+            <a href="history.html" class="menu active">📋 ประวัติคำขอ / กิจกรรม</a>
+        </nav>
+        <button class="logout-btn" onclick="logout()">ออกจากระบบ</button>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="topbar">
+            <div>
+                <h1>📋 ประวัติกิจกรรมและการใช้งาน</h1>
+                <p>บันทึกการทำรายการย้อนหลังทั้งหมดของคุณในระบบ</p>
+            </div>
+            <div class="user-info">
+                <div class="user-icon" id="userIcon">พ</div>
+                <div>
+                    <strong id="usernameDisplay">พนักงาน</strong>
+                    <small>ผู้ใช้งานทั่วไป</small>
+                </div>
+            </div>
+        </header>
+
+        <div class="log-card">
+            <h2>ประวัติกิจกรรม (Activity Logs)</h2>
+            <table class="log-table">
+                <thead>
+                    <tr>
+                        <th>วัน-เวลา</th>
+                        <th>ผู้ใช้งาน</th>
+                        <th>กิจกรรม</th>
+                        <th>รายละเอียด</th>
+                    </tr>
+                </thead>
+                <tbody id="activityLogTableBody">
+                    <!-- โหลดจาก JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- ดึงไฟล์บันทึกกิจกรรม -->
+    <script src="../js/activityLogger.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const username = localStorage.getItem("username") || "พนักงาน";
+            document.getElementById("usernameDisplay").textContent = username;
+            document.getElementById("userIcon").textContent = username.charAt(0).toUpperCase();
+
+            // แสดงรายการประวัติ
+            const logs = getUserActivityLogs();
+            const tableBody = document.getElementById("activityLogTableBody");
+
+            if (logs.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:#64748b;">ยังไม่มีประวัติกิจกรรมในระบบ</td></tr>`;
+            } else {
+                tableBody.innerHTML = logs.map(log => {
+                    let badgeClass = "default";
+                    if (log.action.includes("เข้าสู่ระบบ")) badgeClass = "login";
+                    if (log.action.includes("ออกจากระบบ")) badgeClass = "logout";
+                    if (log.action.includes("ยื่น")) badgeClass = "request";
+
+                    return `
+                        <tr>
+                            <td>${log.timestamp}</td>
+                            <td><strong>${log.user}</strong></td>
+                            <td><span class="action-badge ${badgeClass}">${log.action}</span></td>
+                            <td>${log.details}</td>
+                        </tr>
+                    `;
+                }).join("");
+            }
+        });
+
+        function logout() {
+            logUserActivity("ออกจากระบบ", "ผู้ใช้งานได้ทำการออกจากระบบ");
+            localStorage.removeItem("username");
+            window.location.href = "../login/login.html";
+        }
+    </script>
+</body>
+</html>

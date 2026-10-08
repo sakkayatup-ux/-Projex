@@ -1,0 +1,40 @@
+/* ==========================================================================
+   SIDEBAR MENU INTERACTION (HOVER / CLICK / ACTIVE)
+   ========================================================================== */
+
+/* เมนูธรรมดา */
+.sidebar nav a.menu {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.15s ease-in-out;
+    cursor: pointer;
+    user-select: none; /* ป้องกันการคลุมดำข้อความเวลาคลิกค้าง */
+}
+
+/* 1. เมื่อเอาเมาส์ไปชี้ (Hover) */
+.sidebar nav a.menu:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    transform: translateX(4px); /* เขยิบไปทางขวานิดๆ ให้ดูมีมิติ */
+}
+
+/* 2. เมื่อกดคลิกเมาส์ค้างไว้ (Click / Active) */
+.sidebar nav a.menu:active {
+    background-color: #1d4ed8; /* เปลี่ยนเป็นสีน้ำเงินเข้ม */
+    transform: scale(0.98);    /* ย่อขนาดลงเล็กน้อย ให้ความรู้สึกเหมือนปุ่มถูกกดจริง */
+}
+
+/* 3. เมนูของหน้าที่เปิดใช้อยู่ปัจจุบัน (Active Page) */
+.sidebar nav a.menu.active {
+    background-color: #2563eb;
+    color: #ffffff;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
